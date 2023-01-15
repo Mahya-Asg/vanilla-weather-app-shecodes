@@ -11,6 +11,7 @@
 			crossorigin="anonymous"
 		/>
 		<link rel="stylesheet" href="src/style.css" />
+		<script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 		<title>Weather App</title>
 	</head>
 	<body>
@@ -30,9 +31,9 @@
 							<div class="col-6">
 								<div class="weather-condition">
 									<ul>
-										<li>Percipitation: 40%</li>
-										<li>Humidity: 12%</li>
-										<li>Wind: 2 Km/h</li>
+										<li>Feels like: <span class="feelsLike">loading...</span>°C</li>
+										<li>Humidity: <span class="humidity">loading...</span>%</li>
+										<li>Wind: <span class="wind">loading...</span> Km/h</li>
 									</ul>
 								</div>
 							</div>

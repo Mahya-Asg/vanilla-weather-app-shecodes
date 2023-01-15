@@ -18,6 +18,7 @@ li {
 }
 li {
 	list-style: none;
+  text-transform: capitalize;
 }
 .weather-condition {
 	color: #70757a;
