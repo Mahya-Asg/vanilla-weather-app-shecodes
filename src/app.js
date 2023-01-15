@@ -21,14 +21,19 @@ function formatDate(timestamp) {
 	return `${day} ${hours}:${minutes}`;
 }
 
-function changeInnerHTML(idName, newContent) {
-	let selectedElement = document.querySelector(idName);
+function changeInnerHTML(objectName, newContent) {
+	let selectedElement = document.querySelector(objectName);
 	selectedElement.innerHTML = newContent;
+}
+
+function changeSetAttribute(objectName, attributeName, newContent) {
+	let selectedElement = document.querySelector(objectName);
+	selectedElement.setAttribute(attributeName, newContent);
 }
 function displayApiData(response) {
 	console.log(response.data);
 	// change country
-	changeInnerHTML(".country", response.data.country.split(" (")[0]); 
+	changeInnerHTML(".country", response.data.country.split(" (")[0]);
 	// change city
 	changeInnerHTML(".city", response.data.city);
 	// change date
@@ -46,9 +51,13 @@ function displayApiData(response) {
 		".feelsLike",
 		Math.round(response.data.temperature.feels_like)
 	);
+	// change weather icon
+	changeSetAttribute("#weather-icon", "src", response.data.condition.icon_url);
+	// change image alt
+	changeSetAttribute("#weather-icon", "alt", response.data.condition.icon);
 }
 let key = "9080739tbf37e964oc44a735390ad04b";
-let query = "paris";
+let query = "lisbon";
 let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
 
 axios.get(apiUrl).then(displayApiData);
