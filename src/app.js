@@ -56,8 +56,17 @@ function displayApiData(response) {
 	// change image alt
 	changeSetAttribute("#weather-icon", "alt", response.data.condition.icon);
 }
-let key = "9080739tbf37e964oc44a735390ad04b";
-let query = "lisbon";
-let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
+function search(city) {
+	let key = "9080739tbf37e964oc44a735390ad04b";
+	let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}&units=metric`;
 
-axios.get(apiUrl).then(displayApiData);
+	axios.get(apiUrl).then(displayApiData);
+}
+function handleSubmit(event) {
+	event.preventDefault();
+	let cityInputElement = document.querySelector("#city-input");
+  search(cityInputElement.value);
+}
+search('Tehran')
+let form = document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
