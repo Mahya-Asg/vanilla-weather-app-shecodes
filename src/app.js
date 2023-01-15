@@ -27,9 +27,14 @@ function changeInnerHTML(idName, newContent) {
 }
 function displayApiData(response) {
 	console.log(response.data);
+	// change country
+	changeInnerHTML(".country", response.data.country.split(" (")[0]); 
+	// change city
+	changeInnerHTML(".city", response.data.city);
 	// change date
 	changeInnerHTML(".date", formatDate(response.data.time));
-  changeInnerHTML(".weather-description", response.data.condition.description)
+	// change weather description
+	changeInnerHTML(".weather-description", response.data.condition.description);
 	// change temperature degree
 	changeInnerHTML(".degree", Math.round(response.data.temperature.current));
 	// change humidity
@@ -43,7 +48,7 @@ function displayApiData(response) {
 	);
 }
 let key = "9080739tbf37e964oc44a735390ad04b";
-let query = "tehran";
+let query = "paris";
 let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${query}&key=${key}&units=metric`;
 
 axios.get(apiUrl).then(displayApiData);
