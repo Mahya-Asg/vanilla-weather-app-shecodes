@@ -18,7 +18,7 @@ li {
 }
 li {
 	list-style: none;
-  text-transform: capitalize;
+	text-transform: capitalize;
 }
 .weather-condition {
 	color: #70757a;
@@ -37,7 +37,8 @@ li {
 	text-align: right;
 }
 
-.col-6, .col-5 {
+.col-6,
+.col-5 {
 	padding: 0;
 }
 .degree {
@@ -63,4 +64,8 @@ img {
 .units a {
 	color: #70757a;
 	text-decoration: none;
+}
+.units .active {
+	color: #202124;
+	cursor: default;
 }
