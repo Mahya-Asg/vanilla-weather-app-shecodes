@@ -49,7 +49,7 @@ li {
 	padding-left: 10px;
 	vertical-align: top;
 }
-img {
+#weather-icon {
 	display: inline-block;
 	height: 60px;
 	vertical-align: top;
@@ -68,4 +68,22 @@ img {
 .units .active {
 	color: #202124;
 	cursor: default;
+}
+#forcast {
+	text-align: center;
+	color: #202124;
+	font-size: 15px;
+	margin-top: 10px;
+}
+
+#forcast-icon {
+	width: 44px;
+}
+
+.weather-forcast-tempratures {
+	font-size: 13px;
+}
+
+.weather-forcast-temprature-min {
+	color: #70757a;
 }

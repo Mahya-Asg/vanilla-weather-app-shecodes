@@ -30,6 +30,31 @@ function changeSetAttribute(objectName, attributeName, newContent) {
 	let selectedElement = document.querySelector(objectName);
 	selectedElement.setAttribute(attributeName, newContent);
 }
+
+function displayForcast() {
+	let forcastHTML = `<div class="row">`;
+	let days = ["Sun", "Mon", "Tue", "Thu", "Fri", "Sat"];
+	days.forEach(function (day) {
+		forcastHTML =
+			forcastHTML +
+			`<div class="col-2">
+						<div class="weather-forcast-date">${day}</div>
+						<img 
+							src="https://ssl.gstatic.com/onebox/weather/48/partly_cloudy.png"
+							alt="forcast-icon"
+							id="forcast-icon"
+						/>
+						<div class="weather-forcast-tempratures">
+							<span class="weather-forcast-temprature-max"> 18° </span>
+							<span class="weather-forcast-temprature-min"> 12° </span>
+						</div>
+					</div>`;
+	});
+
+	forcastHTML = forcastHTML + `</div>`;
+	changeInnerHTML("#forcast", forcastHTML);
+}
+
 function displayApiData(response) {
 	console.log(response.data);
 	// change country
@@ -95,3 +120,4 @@ let celsiusLink = document.querySelector("#celsius");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Tehran");
+displayForcast();
