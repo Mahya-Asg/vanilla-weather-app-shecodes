@@ -54,12 +54,12 @@ function displayApiForcast(response) {
 							id = "forcast-icon"
 						/>
 						<div class="weather-forcast-tempratures">
-							<span class="weather-forcast-temprature-max">${Math.round(
+							<span class="weather-forcast-temprature-max"><span class="temp">${Math.round(
 								forcastDay.temperature.maximum
-							)}° </span>
-							<span class="weather-forcast-temprature-min">${Math.round(
+							)}</span>° </span>
+							<span class="weather-forcast-temprature-min"><span class="temp">${Math.round(
 								forcastDay.temperature.minimum
-							)}° </span>
+							)}</span>° </span>
 						</div>
 					</div>`;
 		}
@@ -113,18 +113,29 @@ function handleSubmit(event) {
 }
 
 function displayFahrenheitTemperature(event) {
+	// convert current weather degree from C° to F°
 	event.preventDefault();
 	celsiusLink.classList.remove("active");
 	fahrenheitLink.classList.add("active");
 	let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
 	changeInnerHTML(".degree", Math.round(fahrenheitTemperature));
+
+	// convert forcast weather degrees from C° to F°
+	let degreeForcastElements = document.querySelectorAll(".temp");
+	degreeForcastElements.forEach(function (degree) {
+		degree.innerHTML = Math.round((degree.innerHTML * 9) / 5 + 32);
+	});
 }
 
 function displayCelsiusTemperature(event) {
+	// convert current weather degree from F° to C°
 	event.preventDefault();
 	celsiusLink.classList.add("active");
 	fahrenheitLink.classList.remove("active");
 	changeInnerHTML(".degree", Math.round(celsiusTemperature));
+
+	// convert forcast weather degrees from F° to C°
+	search(document.querySelector(".city").innerHTML);
 }
 
 let celsiusTemperature = null;
