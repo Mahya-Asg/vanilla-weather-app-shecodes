@@ -1,5 +1,5 @@
 function formatDate(timestamp) {
-	let date = new Date(timestamp);
+	let date = new Date(timestamp * 1000);
 	let hours = date.getHours();
 	if (hours < 10) {
 		hours = `0${hours}`;
@@ -21,6 +21,14 @@ function formatDate(timestamp) {
 	return `${day} ${hours}:${minutes}`;
 }
 
+function formatDay(timestamp) {
+	let date = new Date(timestamp * 1000);
+	let day = date.getDay();
+	let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+	return days[day];
+}
+
 function changeInnerHTML(objectName, newContent) {
 	let selectedElement = document.querySelector(objectName);
 	selectedElement.innerHTML = newContent;
@@ -31,31 +39,38 @@ function changeSetAttribute(objectName, attributeName, newContent) {
 	selectedElement.setAttribute(attributeName, newContent);
 }
 
-function displayForcast() {
+function displayApiForcast(response) {
+	console.log(response.data.daily);
+	let forcast = response.data.daily;
 	let forcastHTML = `<div class="row">`;
-	let days = ["Sun", "Mon", "Tue", "Thu", "Fri", "Sat"];
-	days.forEach(function (day) {
-		forcastHTML =
-			forcastHTML +
-			`<div class="col-2">
-						<div class="weather-forcast-date">${day}</div>
+	forcast.forEach(function (forcastDay, index) {
+		if (index < 6) {
+			forcastHTML =
+				forcastHTML +
+				`<div class="col-2">
+						<div class="weather-forcast-date">${formatDay(forcastDay.time)}</div>
 						<img 
-							src="https://ssl.gstatic.com/onebox/weather/48/partly_cloudy.png"
-							alt="forcast-icon"
-							id="forcast-icon"
+							src = ${forcastDay.condition.icon_url}
+							alt = ${forcastDay.condition.icon}
+							id = "forcast-icon"
 						/>
 						<div class="weather-forcast-tempratures">
-							<span class="weather-forcast-temprature-max"> 18° </span>
-							<span class="weather-forcast-temprature-min"> 12° </span>
+							<span class="weather-forcast-temprature-max">${Math.round(
+								forcastDay.temperature.maximum
+							)}°  </span>
+							<span class="weather-forcast-temprature-min">  ${Math.round(
+								forcastDay.temperature.minimum
+							)}° </span>
 						</div>
 					</div>`;
+		}
 	});
 
 	forcastHTML = forcastHTML + `</div>`;
 	changeInnerHTML("#forcast", forcastHTML);
 }
 
-function displayApiData(response) {
+function displayApiCurrentWeather(response) {
 	console.log(response.data);
 	// change country
 	changeInnerHTML(".country", response.data.country.split(" (")[0]);
@@ -63,6 +78,7 @@ function displayApiData(response) {
 	changeInnerHTML(".city", response.data.city);
 	// change date
 	changeInnerHTML(".date", formatDate(response.data.time));
+	console.log(formatDate(response.data.time));
 	// change weather description
 	changeInnerHTML(".weather-description", response.data.condition.description);
 	// change temperature degree
@@ -84,10 +100,14 @@ function displayApiData(response) {
 }
 function search(city) {
 	let key = "9080739tbf37e964oc44a735390ad04b";
-	let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}&units=metric`;
-
-	axios.get(apiUrl).then(displayApiData);
+	// API for current weather data
+	let apiUrlCurrent = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}&units=metric`;
+	axios.get(apiUrlCurrent).then(displayApiCurrentWeather);
+	// API for forcast weather data
+	let apiUrlForcast = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${key}&units=metric`;
+	axios.get(apiUrlForcast).then(displayApiForcast);
 }
+
 function handleSubmit(event) {
 	event.preventDefault();
 	let cityInputElement = document.querySelector("#city-input");
