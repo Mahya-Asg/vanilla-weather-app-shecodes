@@ -40,7 +40,6 @@ function changeSetAttribute(objectName, attributeName, newContent) {
 }
 
 function displayApiForcast(response) {
-	console.log(response.data.daily);
 	let forcast = response.data.daily;
 	let forcastHTML = `<div class="row">`;
 	forcast.forEach(function (forcastDay, index) {
@@ -57,8 +56,8 @@ function displayApiForcast(response) {
 						<div class="weather-forcast-tempratures">
 							<span class="weather-forcast-temprature-max">${Math.round(
 								forcastDay.temperature.maximum
-							)}°  </span>
-							<span class="weather-forcast-temprature-min">  ${Math.round(
+							)}° </span>
+							<span class="weather-forcast-temprature-min">${Math.round(
 								forcastDay.temperature.minimum
 							)}° </span>
 						</div>
@@ -71,14 +70,13 @@ function displayApiForcast(response) {
 }
 
 function displayApiCurrentWeather(response) {
-	console.log(response.data);
+	// console.log(response.data);
 	// change country
 	changeInnerHTML(".country", response.data.country.split(" (")[0]);
 	// change city
 	changeInnerHTML(".city", response.data.city);
 	// change date
 	changeInnerHTML(".date", formatDate(response.data.time));
-	console.log(formatDate(response.data.time));
 	// change weather description
 	changeInnerHTML(".weather-description", response.data.condition.description);
 	// change temperature degree
@@ -113,6 +111,7 @@ function handleSubmit(event) {
 	let cityInputElement = document.querySelector("#city-input");
 	search(cityInputElement.value);
 }
+
 function displayFahrenheitTemperature(event) {
 	event.preventDefault();
 	celsiusLink.classList.remove("active");
@@ -140,4 +139,3 @@ let celsiusLink = document.querySelector("#celsius");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Tehran");
-displayForcast();
